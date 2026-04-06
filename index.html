@@ -796,37 +796,53 @@ function buildSummary(fields) {
 const HOST_EMAIL = 'fabio@fsboutique.co';
 const HOST_WHATSAPP = '5511910634851';
 
-// ── Dark theme PDF with jsPDF ──
+// ── PDF generation ──
 function generatePdfBlob(fields) {
   var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
   var W = 210, M = 12, CW = W - 2*M;
-  var BG       = [10,  10,  10];
-  var GOLD     = [201, 169, 110];
-  var TEXT     = [232, 228, 220];
-  var MUTED    = [138, 132, 120];
-  var FIELD_BG = [20,  20,  20];
-  var BORDER   = [42,  42,  42];
+  // Approved colors
+  var BG      = [255,252,250]; // #FFFCFA
+  var BAR     = [140,116,104]; // #8C7468
+  var BAR_TXT = [255,252,250]; // #FFFCFA
+  var SUB_TXT = [232,221,214]; // #e8ddd6
+  var FLD_BG  = [245,240,235]; // #f5f0eb
+  var FLD_BD  = [212,200,192]; // #d4c8c0
+  var FLD_TXT = [58, 46, 40];  // #3a2e28
+  var LBL     = [160,148,136]; // #a09488
 
+  // Page background
   doc.setFillColor(BG[0],BG[1],BG[2]);
   doc.rect(0,0,W,297,'F');
 
-  doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
-  doc.rect(0,0,W,28,'F');
-  doc.setFontSize(8); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','normal');
-  doc.text('F S   |   B O U T I Q U E', W/2, 8, {align:'center'});
-  doc.setFontSize(15); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','bold');
-  doc.text('OCCUPANCY FORM', W/2, 17, {align:'center'});
-  doc.setFontSize(7); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','normal');
-  doc.text('LA QUINTA DESERT VILLAS  —  La Quinta, California', W/2, 24, {align:'center'});
+  // Header bar
+  doc.setFillColor(BAR[0],BAR[1],BAR[2]);
+  doc.rect(0,0,W,32,'F');
+  // F | S brand
+  doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]);
+  doc.text('F', W/2-4, 9); doc.text('S', W/2+3, 9);
+  doc.setLineWidth(0.3); doc.setDrawColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]);
+  doc.line(W/2, 5, W/2, 11);
+  // BOUTIQUE
+  doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(SUB_TXT[0],SUB_TXT[1],SUB_TXT[2]);
+  doc.text('B O U T I Q U E', W/2, 14, {align:'center'});
+  // Thin line
+  doc.setDrawColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]); doc.setLineWidth(0.2);
+  doc.line(W/2-7.5, 16.5, W/2+7.5, 16.5);
+  // Title
+  doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]);
+  doc.text('OCCUPANCY FORM', W/2, 22, {align:'center'});
+  // Property
+  doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(SUB_TXT[0],SUB_TXT[1],SUB_TXT[2]);
+  doc.text('La Quinta Desert Villas  —  La Quinta, California', W/2, 27, {align:'center'});
 
-  var y = 33;
-  var hw = (CW - 4) / 2;
-  var tw = (CW - 8) / 3;
+  var y = 37;
+  var hw = (CW-4)/2;
+  var tw = (CW-8)/3;
 
   function sec(title) {
     y += 2;
-    doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
-    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(BG[0],BG[1],BG[2]);
+    doc.setFillColor(BAR[0],BAR[1],BAR[2]);
+    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]);
     doc.rect(M, y, CW, 6.5, 'F');
     doc.text('  '+title, M, y+4.8);
     y += 9;
@@ -834,12 +850,12 @@ function generatePdfBlob(fields) {
 
   function fld(label, value, x, w, fh) {
     fh = fh || 8;
-    doc.setFontSize(6); doc.setTextColor(MUTED[0],MUTED[1],MUTED[2]); doc.setFont('helvetica','normal');
+    doc.setFontSize(6); doc.setTextColor(LBL[0],LBL[1],LBL[2]); doc.setFont('helvetica','normal');
     doc.text(label.toUpperCase(), x, y+3);
-    doc.setFillColor(FIELD_BG[0],FIELD_BG[1],FIELD_BG[2]);
-    doc.setDrawColor(BORDER[0],BORDER[1],BORDER[2]); doc.setLineWidth(0.25);
+    doc.setFillColor(FLD_BG[0],FLD_BG[1],FLD_BG[2]);
+    doc.setDrawColor(FLD_BD[0],FLD_BD[1],FLD_BD[2]); doc.setLineWidth(0.25);
     doc.rect(x, y+3.5, w, fh, 'FD');
-    doc.setFontSize(8.5); doc.setTextColor(TEXT[0],TEXT[1],TEXT[2]);
+    doc.setFontSize(8.5); doc.setTextColor(FLD_TXT[0],FLD_TXT[1],FLD_TXT[2]);
     var lines = doc.splitTextToSize(String(value||''), w-4);
     doc.text(lines[0]||'', x+2, y+9.5);
   }
@@ -894,33 +910,38 @@ function generatePdfBlob(fields) {
   var declTxt = 'I have read and agree to the FS Boutique La Quinta house rules and commit to comply with them during the entire stay.';
   var declLines = doc.splitTextToSize(declTxt, CW-4);
   var dh = declLines.length*4.5+6;
-  doc.setFillColor(FIELD_BG[0],FIELD_BG[1],FIELD_BG[2]);
-  doc.setDrawColor(BORDER[0],BORDER[1],BORDER[2]); doc.setLineWidth(0.25);
+  doc.setFillColor(FLD_BG[0],FLD_BG[1],FLD_BG[2]);
+  doc.setDrawColor(FLD_BD[0],FLD_BD[1],FLD_BD[2]); doc.setLineWidth(0.25);
   doc.rect(M, y, CW, dh, 'FD');
-  doc.setFontSize(7.5); doc.setTextColor(MUTED[0],MUTED[1],MUTED[2]); doc.setFont('helvetica','normal');
+  doc.setFontSize(7.5); doc.setTextColor(LBL[0],LBL[1],LBL[2]); doc.setFont('helvetica','normal');
   doc.text(declLines, M+2, y+5);
   y += dh+4;
 
   var sw = CW*0.62, dw = CW*0.32;
-  doc.setFontSize(6); doc.setTextColor(MUTED[0],MUTED[1],MUTED[2]);
+  doc.setFontSize(6); doc.setTextColor(LBL[0],LBL[1],LBL[2]);
   doc.text('GUEST SIGNATURE', M, y+3);
   doc.text('DATE', M+sw+6, y+3);
   y += 3.5;
-  doc.setFillColor(FIELD_BG[0],FIELD_BG[1],FIELD_BG[2]);
-  doc.setDrawColor(BORDER[0],BORDER[1],BORDER[2]); doc.setLineWidth(0.25);
+  doc.setFillColor(FLD_BG[0],FLD_BG[1],FLD_BG[2]);
+  doc.setDrawColor(FLD_BD[0],FLD_BD[1],FLD_BD[2]); doc.setLineWidth(0.25);
   doc.rect(M, y, sw, 22, 'FD');
   doc.rect(M+sw+6, y, dw, 22, 'FD');
   try {
     var sigData = canvas.toDataURL('image/png');
     doc.addImage(sigData,'PNG',M+1,y+1,sw-2,20);
   } catch(e){}
-  doc.setFontSize(9); doc.setTextColor(TEXT[0],TEXT[1],TEXT[2]);
+  doc.setFontSize(9); doc.setTextColor(FLD_TXT[0],FLD_TXT[1],FLD_TXT[2]);
   doc.text(document.getElementById('sigDate').value||'', M+sw+9, y+13);
 
-  doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
-  doc.rect(0,287,W,10,'F');
-  doc.setFontSize(6.5); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','normal');
-  doc.text('F S  |  B O U T I Q U E   —   La Quinta, California', W/2, 293, {align:'center'});
+  // Footer bar
+  doc.setFillColor(BAR[0],BAR[1],BAR[2]);
+  doc.rect(0,285,W,12,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]);
+  doc.text('F', W/2-3, 289.5); doc.text('S', W/2+2, 289.5);
+  doc.setDrawColor(BAR_TXT[0],BAR_TXT[1],BAR_TXT[2]); doc.setLineWidth(0.2);
+  doc.line(W/2, 287, W/2, 291);
+  doc.setFont('helvetica','normal'); doc.setFontSize(5.5); doc.setTextColor(SUB_TXT[0],SUB_TXT[1],SUB_TXT[2]);
+  doc.text('B O U T I Q U E', W/2, 293, {align:'center'});
 
   return doc.output('blob');
 }
