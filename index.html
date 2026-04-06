@@ -15,10 +15,10 @@
   --card-hover: #1f1f1f;
   --border: #2a2a2a;
   --border-light: #333;
-  --gold: #c9a96e;
-  --gold-light: #d4b87a;
-  --gold-dim: rgba(201, 169, 110, 0.15);
-  --gold-glow: rgba(201, 169, 110, 0.08);
+  --gold: #8C7468;
+  --gold-light: #a89878;
+  --gold-dim: rgba(140, 116, 104, 0.15);
+  --gold-glow: rgba(140, 116, 104, 0.08);
   --white: #f5f5f0;
   --text: #e8e4dc;
   --text-muted: #8a8478;
@@ -421,8 +421,8 @@ canvas { display: block; width: 100%; cursor: crosshair; }
 <!-- Header -->
 <div class="header">
 <div style="display:inline-flex;align-items:center;gap:6px;">
-<span style="font-family:Playfair Display,Georgia,serif;font-size:22px;font-weight:400;color:#c9a96e;">F</span>
-<span style="font-family:Playfair Display,Georgia,serif;font-size:22px;font-weight:400;color:#c9a96e;">S</span>
+<span style="font-family:Playfair Display,Georgia,serif;font-size:22px;font-weight:400;color:#8C7468;">F</span>
+<span style="font-family:Playfair Display,Georgia,serif;font-size:22px;font-weight:400;color:#8C7468;">S</span>
 </div>
   <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 8px; letter-spacing: 5px; color: var(--text-dim); margin-top: 2px; padding-left: 5px;">BOUTIQUE</div>
   <div style="width: 30px; height: 0.5px; background: var(--text-dim); margin: 12px auto;"></div>
@@ -702,7 +702,7 @@ let drawing = false, hasSig = false;
 function resizeCanvas() {
   const wrap = canvas.parentElement;
   canvas.width = wrap.clientWidth - 4;
-  ctx.strokeStyle = '#c9a96e';
+  ctx.strokeStyle = '#8C7468';
   ctx.lineWidth = 1.5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -971,15 +971,15 @@ function sendToHost() {
       setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
       var overlay = document.createElement('div');
       overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;';
-      overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #c9a96e;border-radius:4px;padding:32px;max-width:420px;text-align:center;font-family:Josefin Sans,sans-serif;">'
-        + '<div style="font-size:13px;letter-spacing:4px;color:#c9a96e;margin-bottom:16px;">PDF SAVED</div>'
+      overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #8C7468;border-radius:4px;padding:32px;max-width:420px;text-align:center;font-family:Josefin Sans,sans-serif;">'
+        + '<div style="font-size:13px;letter-spacing:4px;color:#8C7468;margin-bottom:16px;">PDF SAVED</div>'
         + '<div style="font-size:12px;color:#e8e4dc;line-height:1.8;margin-bottom:24px;">'
         + '1. The PDF has been saved to your <strong>Downloads</strong> folder<br>'
         + '2. Open <strong>WhatsApp Web</strong><br>'
         + '3. In the conversation with your host, click the <strong>attachment icon 📎</strong><br>'
         + '4. Select the file <strong>' + filename + '</strong>'
         + '</div>'
-        + '<button onclick="this.parentElement.parentElement.remove()" style="background:#c9a96e;border:none;color:#0a0a0a;padding:12px 28px;font-family:Josefin Sans,sans-serif;font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:2px;">GOT IT</button>'
+        + '<button onclick="this.parentElement.parentElement.remove()" style="background:#8C7468;border:none;color:#0a0a0a;padding:12px 28px;font-family:Josefin Sans,sans-serif;font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:2px;">GOT IT</button>'
         + '</div>';
       document.body.appendChild(overlay);
     }
@@ -1009,14 +1009,14 @@ function sendByEmail() {
     setTimeout(function() {
       var overlay = document.createElement('div');
       overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;';
-      overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #c9a96e;border-radius:4px;padding:32px;max-width:420px;text-align:center;font-family:Josefin Sans,sans-serif;">'
-        + '<div style="font-size:13px;letter-spacing:4px;color:#c9a96e;margin-bottom:16px;">ALMOST THERE</div>'
+      overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #8C7468;border-radius:4px;padding:32px;max-width:420px;text-align:center;font-family:Josefin Sans,sans-serif;">'
+        + '<div style="font-size:13px;letter-spacing:4px;color:#8C7468;margin-bottom:16px;">ALMOST THERE</div>'
         + '<div style="font-size:12px;color:#e8e4dc;line-height:1.8;margin-bottom:24px;">'
         + 'Email has been pre-filled with your data.<br>'
         + 'Before sending, <strong>attach the PDF</strong><br>'
         + 'saved in your <strong>Downloads</strong> folder:<br><br>'
-        + '<span style="color:#c9a96e;">' + filename + '</span></div>'
-        + '<button onclick="this.parentElement.parentElement.remove()" style="background:#c9a96e;border:none;color:#0a0a0a;padding:12px 28px;font-family:Josefin Sans,sans-serif;font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:2px;">GOT IT</button></div>';
+        + '<span style="color:#8C7468;">' + filename + '</span></div>'
+        + '<button onclick="this.parentElement.parentElement.remove()" style="background:#8C7468;border:none;color:#0a0a0a;padding:12px 28px;font-family:Josefin Sans,sans-serif;font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:2px;">GOT IT</button></div>';
       document.body.appendChild(overlay);
     }, 800);
   } catch(err) { showToast('Error: ' + (err.message || String(err))); }
