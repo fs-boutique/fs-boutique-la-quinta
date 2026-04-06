@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ficha de Ocupação — FS | BOUTIQUE — La Quinta, California</title>
+<title>Occupancy Form — FS | BOUTIQUE — La Quinta, California</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
   --black: #0a0a0a;
@@ -60,6 +60,7 @@ body {
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 8px;
+  padding-left: 12px;
 }
 .brand span { color: var(--text-dim); margin: 0 4px; }
 .header h1 {
@@ -430,124 +431,123 @@ canvas { display: block; width: 100%; cursor: crosshair; }
 <!-- Header -->
 <div class="header">
   <div class="brand">FS <span>|</span> BOUTIQUE</div>
-  <h1>Ficha de Ocupação</h1>
-  <p>La Quinta, California &mdash; Propriedade La Quinta Resort</p>
+  <h1>Occupancy Form</h1>
+  <p>La Quinta, California &mdash; La Quinta Desert Villas</p>
 </div>
 
 <div class="container">
 
-  <!-- 1. Propriedade & Anfitrião -->
+  <!-- 1. Property & Host -->
   <div class="section open" data-section>
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon">&#9750;</div>
       <div class="section-title">
-        <h2>Propriedade &amp; Anfitrião</h2>
-        <span>Informações do imóvel</span>
+        <h2>Property &amp; Host</h2>
+        <span>Property information</span>
       </div>
       <div class="section-toggle">&#9662;</div>
     </div>
     <div class="section-body">
       <div class="section-content">
         <div class="info-row">
-          <div class="info-label">Anfitrião</div>
+          <div class="info-label">Host</div>
           <div class="info-value">Fabio Silva</div>
         </div>
         <div class="info-row">
-          <div class="info-label">Propriedade</div>
-          <div class="info-value">La Quinta Resort</div>
+          <div class="info-label">Property</div>
+          <div class="info-value">La Quinta Desert Villas</div>
         </div>
         <div class="info-row">
-          <div class="info-label">Localização</div>
+          <div class="info-label">Location</div>
           <div class="info-value">La Quinta<br>California, USA</div>
         </div>
         <div class="field-row" style="margin-top:16px;">
           <div class="field-group">
-            <label>Endereço</label>
-            <input type="text" id="apartamento" placeholder="Endereço da propriedade" required>
+            <label>Address</label>
+            <input type="text" id="apartamento" value="45245 Seeley Dr. 15H, La Quinta, CA 92253" required>
           </div>
           <div class="field-group">
-            <label>Nº de Hóspedes</label>
-            <input type="text" id="bloco" placeholder="Quantidade" required>
+            <label>Number of Guests</label>
+            <input type="text" id="bloco" placeholder="e.g. 2" required>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Ocupantes -->
+  <!-- 2. Occupants -->
   <div class="section open" data-section>
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon">&#9787;</div>
       <div class="section-title">
-        <h2>Ocupantes</h2>
-        <span>Dados dos hóspedes (máximo 8)</span>
+        <h2>Occupants</h2>
+        <span>Guest information (max 8)</span>
       </div>
       <div class="section-toggle">&#9662;</div>
     </div>
     <div class="section-body">
       <div class="section-content">
-        <!-- Occupant 1 (primary, always visible) -->
         <div class="occupant-block">
           <div class="occupant-block-header">
-            <span class="occupant-label">Ocupante 1 (Responsável)</span>
+            <span class="occupant-label">Occupant 1 (Primary Guest)</span>
           </div>
           <div class="field-group">
-            <label>Nome Completo</label>
-            <input type="text" id="occupant1Name" placeholder="Nome completo" required>
+            <label>Full Name</label>
+            <input type="text" id="occupant1Name" placeholder="Full name" required>
           </div>
           <div class="field-row">
             <div class="field-group">
-              <label>RG</label>
-              <input type="text" id="occupant1RG" placeholder="Número do RG" required>
+              <label>Driver's License Number</label>
+              <input type="text" id="occupant1RG" placeholder="Driver's License #" required>
             </div>
             <div class="field-group">
-              <label>CPF</label>
-              <input type="text" id="occupant1CPF" placeholder="000.000.000-00" required>
+              <label>Date of Birth</label>
+              <input type="text" id="occupant1CPF" placeholder="MM/DD/YYYY" required>
             </div>
           </div>
           <div class="field-row">
             <div class="field-group">
-              <label>Telefone</label>
-              <input type="tel" id="occupant1Phone" placeholder="+55 (00) 00000-0000" required>
+              <label>Phone</label>
+              <input type="tel" id="occupant1Phone" placeholder="+1 (000) 000-0000" required>
             </div>
             <div class="field-group">
               <label>E-mail</label>
-              <input type="email" id="occupant1Email" placeholder="email@exemplo.com" required>
+              <input type="email" id="occupant1Email" placeholder="email@example.com" required>
             </div>
           </div>
         </div>
 
         <div id="additionalOccupants"></div>
-        <button class="btn-add" id="btnAddOccupant" onclick="addOccupant()">+ Adicionar Ocupante</button>
+        <button class="btn-add" id="btnAddOccupant" onclick="addOccupant()">+ Add Occupant</button>
       </div>
     </div>
   </div>
 
-  <!-- 3. Veículos -->
+  <!-- 3. Vehicles -->
   <div class="section open" data-section>
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon">&#9951;</div>
       <div class="section-title">
-        <h2>Veículos</h2>
-        <span>Dados dos veículos</span>
+        <h2>Vehicles</h2>
+        <span>Vehicle information</span>
       </div>
       <div class="section-toggle">&#9662;</div>
     </div>
     <div class="section-body">
       <div class="section-content">
         <div id="vehicleEntries"></div>
-        <button class="btn-add" id="btnAddVehicle" onclick="addVehicle()">+ Adicionar Veículo</button>
+        <button class="btn-add" id="btnAddVehicle" onclick="addVehicle()">+ Add Vehicle</button>
       </div>
     </div>
   </div>
 
-  <!-- 4. Período de Ocupação -->
+  <!-- 4. Stay Period -->
   <div class="section open" data-section>
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon">&#9783;</div>
       <div class="section-title">
-        <h2>Período de Ocupação</h2>
-        <span>Datas da estadia</span>
+        <h2>Stay Period</h2>
+        <span>Check-in and check-out dates</span>
       </div>
       <div class="section-toggle">&#9662;</div>
     </div>
@@ -555,11 +555,11 @@ canvas { display: block; width: 100%; cursor: crosshair; }
       <div class="section-content">
         <div class="field-row">
           <div class="field-group">
-            <label>Data de Início</label>
+            <label>Check-in Date</label>
             <input type="date" id="checkIn" required>
           </div>
           <div class="field-group">
-            <label>Data de Término</label>
+            <label>Check-out Date</label>
             <input type="date" id="checkOut" required>
           </div>
         </div>
@@ -567,13 +567,13 @@ canvas { display: block; width: 100%; cursor: crosshair; }
     </div>
   </div>
 
-  <!-- 5. Declaração & Assinatura -->
+  <!-- 5. Declaration & Signature -->
   <div class="section open" data-section>
     <div class="section-header" onclick="toggleSection(this)">
       <div class="section-icon">&#10002;</div>
       <div class="section-title">
-        <h2>Declaração &amp; Assinatura</h2>
-        <span>Assine para confirmar</span>
+        <h2>Declaration &amp; Signature</h2>
+        <span>Sign to confirm</span>
       </div>
       <div class="section-toggle">&#9662;</div>
     </div>
@@ -581,25 +581,25 @@ canvas { display: block; width: 100%; cursor: crosshair; }
       <div class="section-content">
         <div class="agree-row">
           <input type="checkbox" id="agreeCheck">
-          <p>Eu, abaixo assinado(a), declaro que li e concordo com as Regras da Propriedade FS Boutique La Quinta e me comprometo a cumpri-las durante todo o período de ocupação. Estou ciente de que o descumprimento das regras poderá acarretar em penalidades, incluindo a solicitação de desocupação imediata do imóvel.</p>
+          <p>I, the undersigned, declare that I have read and agree to the FS Boutique La Quinta house rules and commit to complying with them throughout the entire stay. I understand that failure to comply may result in penalties, including immediate eviction from the property.</p>
         </div>
 
-        <label>Assinatura do Responsável</label>
+        <label>Responsible Guest Signature</label>
         <div class="sig-canvas-wrap" id="sigWrap">
-          <span class="sig-placeholder" id="sigPlaceholder">Assine aqui</span>
+          <span class="sig-placeholder" id="sigPlaceholder">Sign here</span>
           <canvas id="sigCanvas" height="140"></canvas>
         </div>
-        <button class="btn-clear" onclick="clearSig()">Limpar Assinatura</button>
+        <button class="btn-clear" onclick="clearSig()">Clear Signature</button>
 
         <div class="field-group" style="margin-top:16px;">
-          <label>Data</label>
+          <label>Date</label>
           <input type="date" id="sigDate" required style="max-width:calc(50% - 8px);">
         </div>
 
         <div class="actions">
-          <button class="btn-primary" id="submitBtn" disabled onclick="sendToHost('email')">&#9993;&ensp;Enviar por E-mail</button>
-          <button class="btn-primary btn-whatsapp" id="submitWA" disabled onclick="sendToHost('whatsapp')">&#128172;&ensp;Enviar por WhatsApp</button>
-          <p class="send-note">A ficha preenchida será enviada diretamente ao anfitrião.</p>
+          <button class="btn-primary" id="submitBtn" disabled onclick="sendByEmail()">&#9993;&ensp;Send via E-mail</button>
+          <button class="btn-primary btn-whatsapp" id="submitWA" disabled onclick="sendToHost()">&#128172;&ensp;Send via WhatsApp</button>
+          <p class="send-note">The completed form will be sent directly to your host.</p>
         </div>
       </div>
     </div>
@@ -622,7 +622,7 @@ const MAX_OCCUPANTS = 8;
 
 function addOccupant() {
   if (occupantCount >= MAX_OCCUPANTS) {
-    showToast('Máximo de 8 ocupantes atingido');
+    showToast('Maximum of 8 occupants reached');
     return;
   }
   occupantCount++;
@@ -632,21 +632,21 @@ function addOccupant() {
   const num = occupantCount;
   div.innerHTML = `
     <div class="occupant-block-header">
-      <span class="occupant-label">Ocupante ${num}</span>
+      <span class="occupant-label">Occupant ${num}</span>
       <button class="btn-remove" onclick="removeOccupant('occupant-${num}')">&#10005;</button>
     </div>
     <div class="field-group">
-      <label>Nome Completo</label>
-      <input type="text" placeholder="Nome completo" required>
+      <label>Full Name</label>
+      <input type="text" placeholder="Full name" required>
     </div>
     <div class="field-row">
       <div class="field-group">
-        <label>RG</label>
-        <input type="text" placeholder="Número do RG" required>
+        <label>Driver's License</label>
+        <input type="text" placeholder="Driver's License #">
       </div>
       <div class="field-group">
-        <label>CPF</label>
-        <input type="text" placeholder="000.000.000-00" required>
+        <label>Date of Birth</label>
+        <input type="text" placeholder="MM/DD/YYYY">
       </div>
     </div>`;
   document.getElementById('additionalOccupants').appendChild(div);
@@ -679,17 +679,17 @@ function addVehicle() {
   const num = vehicleCount;
   div.innerHTML = `
     <div class="occupant-block-header">
-      <span class="occupant-label">Veículo ${num}</span>
+      <span class="occupant-label">Vehicle ${num}</span>
       <button class="btn-remove" onclick="removeVehicle('vehicle-${num}')">&#10005;</button>
     </div>
     <div class="field-row">
       <div class="field-group">
-        <label>Modelo / Cor</label>
-        <input type="text" placeholder="Ex: Honda Civic Prata" required>
+        <label>Make / Color</label>
+        <input type="text" placeholder="e.g. Honda Civic Silver" required>
       </div>
       <div class="field-group">
-        <label>Placa</label>
-        <input type="text" placeholder="ABC-1234" required>
+        <label>License Plate</label>
+        <input type="text" placeholder="e.g. 8ABC123" required>
       </div>
     </div>`;
   document.getElementById('vehicleEntries').appendChild(div);
@@ -750,50 +750,45 @@ function checkSubmit() {
 function gatherFormData() {
   const fields = [];
 
-  // Property
-  fields.push({ label: 'Endereço', value: document.getElementById('apartamento').value });
-  fields.push({ label: 'Nº de Hóspedes', value: document.getElementById('bloco').value });
+  fields.push({ label: 'Address', value: document.getElementById('apartamento').value });
+  fields.push({ label: 'Number of Guests', value: document.getElementById('bloco').value });
 
-  // Primary occupant
-  fields.push({ label: 'Ocupante 1 — Nome', value: document.getElementById('occupant1Name').value });
-  fields.push({ label: 'Ocupante 1 — RG', value: document.getElementById('occupant1RG').value });
-  fields.push({ label: 'Ocupante 1 — CPF', value: document.getElementById('occupant1CPF').value });
-  fields.push({ label: 'Ocupante 1 — Telefone', value: document.getElementById('occupant1Phone').value });
-  fields.push({ label: 'Ocupante 1 — E-mail', value: document.getElementById('occupant1Email').value });
+  fields.push({ label: 'Occupant 1 — Full Name', value: document.getElementById('occupant1Name').value });
+  fields.push({ label: 'Occupant 1 — Driver\'s License', value: document.getElementById('occupant1RG').value });
+  fields.push({ label: 'Occupant 1 — Date of Birth', value: document.getElementById('occupant1CPF').value });
+  fields.push({ label: 'Occupant 1 — Phone', value: document.getElementById('occupant1Phone').value });
+  fields.push({ label: 'Occupant 1 — Email', value: document.getElementById('occupant1Email').value });
 
-  // Additional occupants
   const additionalBlocks = document.querySelectorAll('#additionalOccupants .occupant-block');
   additionalBlocks.forEach((block, i) => {
     const inputs = block.querySelectorAll('input');
     const num = i + 2;
-    if (inputs[0]?.value) fields.push({ label: `Ocupante ${num} — Nome`, value: inputs[0].value });
-    if (inputs[1]?.value) fields.push({ label: `Ocupante ${num} — RG`, value: inputs[1].value });
-    if (inputs[2]?.value) fields.push({ label: `Ocupante ${num} — CPF`, value: inputs[2].value });
+    if (inputs[0]?.value) fields.push({ label: `Occupant ${num} — Full Name`, value: inputs[0].value });
+    if (inputs[1]?.value) fields.push({ label: `Occupant ${num} — Driver's License`, value: inputs[1].value });
+    if (inputs[2]?.value) fields.push({ label: `Occupant ${num} — Date of Birth`, value: inputs[2].value });
   });
 
-  // Vehicles
   const vehicleBlocks = document.querySelectorAll('#vehicleEntries .occupant-block');
   vehicleBlocks.forEach((block, i) => {
     const inputs = block.querySelectorAll('input');
     const num = i + 1;
-    if (inputs[0]?.value) fields.push({ label: `Veículo ${num} — Modelo/Cor`, value: inputs[0].value });
-    if (inputs[1]?.value) fields.push({ label: `Veículo ${num} — Placa`, value: inputs[1].value });
+    if (inputs[0]?.value) fields.push({ label: `Vehicle ${num} — Make/Color`, value: inputs[0].value });
+    if (inputs[1]?.value) fields.push({ label: `Vehicle ${num} — License Plate`, value: inputs[1].value });
   });
 
-  // Dates
-  fields.push({ label: 'Data de Início', value: document.getElementById('checkIn').value });
-  fields.push({ label: 'Data de Término', value: document.getElementById('checkOut').value });
+  fields.push({ label: 'Check-in Date', value: document.getElementById('checkIn').value });
+  fields.push({ label: 'Check-out Date', value: document.getElementById('checkOut').value });
 
   return fields;
 }
 
 function buildSummary(fields) {
-  let text = '=== FS | BOUTIQUE — Ficha de Ocupação ===\n';
-  text += 'Propriedade La Quinta Resort — La Quinta, California\n\n';
+  let text = '=== FS | BOUTIQUE — Occupancy Form ===\n';
+  text += 'La Quinta Desert Villas — La Quinta, California\n\n';
   fields.forEach(f => { text += `${f.label}: ${f.value}\n`; });
-  text += '\n✓ Regulamento Interno aceito e assinado\n';
-  text += `Data: ${document.getElementById('sigDate').value}\n`;
-  text += '\n— Enviado via FS | BOUTIQUE Ficha de Ocupação';
+  text += '\n✓ House rules accepted and signed\n';
+  text += `Date: ${document.getElementById('sigDate').value}\n`;
+  text += '\n— Sent via FS | BOUTIQUE Occupancy Form';
   return text;
 }
 
@@ -801,69 +796,136 @@ function buildSummary(fields) {
 const HOST_EMAIL = 'fabio@fsboutique.co';
 const HOST_WHATSAPP = '5511910634851';
 
-// ── PDF generation with html2pdf.js ──
-function buildPdfElement(fields) {
-  var sigDataURL = canvas.toDataURL('image/png');
-  var sigDate = document.getElementById('sigDate').value;
-  var property = fields.filter(function(f) { return f.label === 'Endereço' || f.label === 'Nº de Hóspedes'; });
-  var occupants = fields.filter(function(f) { return f.label.indexOf('Ocupante') === 0; });
-  var vehicles = fields.filter(function(f) { return f.label.indexOf('Ve') === 0; });
-  var dates = fields.filter(function(f) { return f.label.indexOf('Data de') === 0; });
+// ── Dark theme PDF with jsPDF ──
+function generatePdfBlob(fields) {
+  var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+  var W = 210, M = 12, CW = W - 2*M;
+  var BG       = [10,  10,  10];
+  var GOLD     = [201, 169, 110];
+  var TEXT     = [232, 228, 220];
+  var MUTED    = [138, 132, 120];
+  var FIELD_BG = [20,  20,  20];
+  var BORDER   = [42,  42,  42];
 
-  function row(label, value) {
-    return '<tr><td style="padding:6px 10px;font-size:11px;color:#8a8478;letter-spacing:1px;border-bottom:1px solid #e8e4dc;width:40%">' + label + '</td><td style="padding:6px 10px;font-size:13px;color:#1a1a1a;border-bottom:1px solid #e8e4dc">' + (value || '-') + '</td></tr>';
-  }
-  function section(title) {
-    return '<div style="margin:18px 0 8px;padding-bottom:4px;border-bottom:2px solid #c9a96e;font-size:11px;letter-spacing:2px;color:#c9a96e;font-weight:bold">' + title.toUpperCase() + '</div>';
+  doc.setFillColor(BG[0],BG[1],BG[2]);
+  doc.rect(0,0,W,297,'F');
+
+  doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
+  doc.rect(0,0,W,28,'F');
+  doc.setFontSize(8); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','normal');
+  doc.text('F S   |   B O U T I Q U E', W/2, 8, {align:'center'});
+  doc.setFontSize(15); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','bold');
+  doc.text('OCCUPANCY FORM', W/2, 17, {align:'center'});
+  doc.setFontSize(7); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','normal');
+  doc.text('LA QUINTA DESERT VILLAS  —  La Quinta, California', W/2, 24, {align:'center'});
+
+  var y = 33;
+  var hw = (CW - 4) / 2;
+  var tw = (CW - 8) / 3;
+
+  function sec(title) {
+    y += 2;
+    doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
+    doc.setFont('helvetica','bold'); doc.setFontSize(7.5); doc.setTextColor(BG[0],BG[1],BG[2]);
+    doc.rect(M, y, CW, 6.5, 'F');
+    doc.text('  '+title, M, y+4.8);
+    y += 9;
   }
 
-  var h = '';
-  h += '<div style="font-family:Helvetica,Arial,sans-serif;width:100%;padding:24px;background:#fff;color:#1a1a1a">';
-  h += '<div style="text-align:center;padding-bottom:16px;border-bottom:2px solid #c9a96e;margin-bottom:8px">';
-  h += '<div style="font-size:14px;letter-spacing:8px;color:#c9a96e">FS | BOUTIQUE</div>';
-  h += '<div style="font-size:20px;letter-spacing:4px;color:#1a1a1a;margin-top:8px">FICHA DE OCUPACAO</div>';
-  h += '<div style="font-size:9px;letter-spacing:2px;color:#8a8478;margin-top:4px">LA QUINTA, CALIFORNIA - FS BOUTIQUE LA QUINTA</div>';
-  h += '</div>';
-  h += section('Propriedade & Anfitriao');
-  h += '<table style="width:100%;border-collapse:collapse">';
-  h += row('Anfitriao', 'Fabio Silva');
-  h += row('Propriedade', 'La Quinta Resort');
-  h += row('Localizacao', 'La Quinta, California, USA');
-  for (var i = 0; i < property.length; i++) h += row(property[i].label, property[i].value);
-  h += '</table>';
-  h += section('Ocupantes');
-  h += '<table style="width:100%;border-collapse:collapse">';
-  for (var i = 0; i < occupants.length; i++) h += row(occupants[i].label, occupants[i].value);
-  h += '</table>';
-  if (vehicles.length) {
-    h += section('Veiculos');
-    h += '<table style="width:100%;border-collapse:collapse">';
-    for (var i = 0; i < vehicles.length; i++) h += row(vehicles[i].label, vehicles[i].value);
-    h += '</table>';
+  function fld(label, value, x, w, fh) {
+    fh = fh || 8;
+    doc.setFontSize(6); doc.setTextColor(MUTED[0],MUTED[1],MUTED[2]); doc.setFont('helvetica','normal');
+    doc.text(label.toUpperCase(), x, y+3);
+    doc.setFillColor(FIELD_BG[0],FIELD_BG[1],FIELD_BG[2]);
+    doc.setDrawColor(BORDER[0],BORDER[1],BORDER[2]); doc.setLineWidth(0.25);
+    doc.rect(x, y+3.5, w, fh, 'FD');
+    doc.setFontSize(8.5); doc.setTextColor(TEXT[0],TEXT[1],TEXT[2]);
+    var lines = doc.splitTextToSize(String(value||''), w-4);
+    doc.text(lines[0]||'', x+2, y+9.5);
   }
-  h += section('Periodo de Ocupacao');
-  h += '<table style="width:100%;border-collapse:collapse">';
-  for (var i = 0; i < dates.length; i++) h += row(dates[i].label, dates[i].value);
-  h += '</table>';
-  h += section('Declaracao & Assinatura');
-  h += '<div style="background:#f5f3ef;border:1px solid #e8e4dc;padding:10px;margin:8px 0;font-size:10px;line-height:1.6;color:#5a5650">';
-  h += 'Eu, abaixo assinado(a), declaro que li e concordo com as Regras da Propriedade FS Boutique La Quinta e me comprometo a cumpri-las durante todo o periodo de ocupacao.';
-  h += '</div>';
-  h += '<div style="margin-top:10px"><div style="font-size:9px;letter-spacing:1px;color:#8a8478;margin-bottom:4px">ASSINATURA DO RESPONSAVEL</div>';
-  h += '<div style="border:1px solid #e8e4dc;display:inline-block;padding:4px;background:#fff">';
-  h += '<img src="' + sigDataURL + '" style="height:80px;display:block">';
-  h += '</div></div>';
-  h += '<div style="margin-top:8px;font-size:10px;color:#8a8478">Data: ' + sigDate + '</div>';
-  h += '<div style="text-align:center;margin-top:24px;padding-top:12px;border-top:2px solid #c9a96e;font-size:8px;letter-spacing:2px;color:#8a8478">FS | BOUTIQUE - LA QUINTA, CALIFORNIA</div>';
-  h += '</div>';
 
-  var el = document.createElement('div');
-  el.innerHTML = h;
-  el.style.cssText = 'position:absolute;left:0;top:0;width:700px;background:#fff;z-index:99999;';
-  return el;
+  var prop = {};
+  fields.forEach(function(f){ prop[f.label] = f.value; });
+
+  sec('PROPERTY & HOST');
+  fld('Host', 'Fabio Silva', M, hw);
+  fld('Property', 'La Quinta Desert Villas', M+hw+4, hw);
+  y += 12.5;
+  fld('Address', prop['Address']||'45245 Seeley Dr. 15H', M, hw);
+  fld('Number of Guests', prop['Number of Guests']||'', M+hw+4, hw);
+  y += 12.5;
+
+  sec('OCCUPANTS');
+  var occFields = fields.filter(function(f){ return f.label.indexOf('Occupant')===0; });
+  var occMap = {};
+  occFields.forEach(function(f){
+    var parts = f.label.split(' — ');
+    var key = parts.length > 1 ? parts[1] : f.label;
+    var num = parts[0];
+    if (!occMap[num]) occMap[num] = {};
+    occMap[num][key] = f.value;
+  });
+  Object.keys(occMap).forEach(function(num) {
+    var o = occMap[num];
+    fld('Full Name', o['Full Name']||'', M, CW); y += 12.5;
+    fld("Driver's License", o["Driver's License"]||'', M, tw);
+    fld('Date of Birth', o['Date of Birth']||'', M+tw+4, tw);
+    fld('Phone', o['Phone']||'', M+tw*2+8, tw);
+    y += 12.5;
+    fld('Email', o['Email']||'', M, CW); y += 12.5;
+  });
+
+  var vehs = fields.filter(function(f){ return f.label.indexOf('Vehicle')===0; });
+  if(vehs.length){
+    sec('VEHICLES');
+    for(var i=0; i<vehs.length; i+=2){
+      fld(vehs[i].label.split(' — ')[1]||'Make/Color', vehs[i].value, M, hw);
+      if(vehs[i+1]) fld(vehs[i+1].label.split(' — ')[1]||'License Plate', vehs[i+1].value, M+hw+4, hw);
+      y+=12.5;
+    }
+  }
+
+  sec('STAY PERIOD');
+  fld('Check-in', prop['Check-in Date']||'', M, hw);
+  fld('Check-out', prop['Check-out Date']||'', M+hw+4, hw);
+  y += 12.5;
+
+  sec('DECLARATION & SIGNATURE');
+  var declTxt = 'I have read and agree to the FS Boutique La Quinta house rules and commit to comply with them during the entire stay.';
+  var declLines = doc.splitTextToSize(declTxt, CW-4);
+  var dh = declLines.length*4.5+6;
+  doc.setFillColor(FIELD_BG[0],FIELD_BG[1],FIELD_BG[2]);
+  doc.setDrawColor(BORDER[0],BORDER[1],BORDER[2]); doc.setLineWidth(0.25);
+  doc.rect(M, y, CW, dh, 'FD');
+  doc.setFontSize(7.5); doc.setTextColor(MUTED[0],MUTED[1],MUTED[2]); doc.setFont('helvetica','normal');
+  doc.text(declLines, M+2, y+5);
+  y += dh+4;
+
+  var sw = CW*0.62, dw = CW*0.32;
+  doc.setFontSize(6); doc.setTextColor(MUTED[0],MUTED[1],MUTED[2]);
+  doc.text('GUEST SIGNATURE', M, y+3);
+  doc.text('DATE', M+sw+6, y+3);
+  y += 3.5;
+  doc.setFillColor(FIELD_BG[0],FIELD_BG[1],FIELD_BG[2]);
+  doc.setDrawColor(BORDER[0],BORDER[1],BORDER[2]); doc.setLineWidth(0.25);
+  doc.rect(M, y, sw, 22, 'FD');
+  doc.rect(M+sw+6, y, dw, 22, 'FD');
+  try {
+    var sigData = canvas.toDataURL('image/png');
+    doc.addImage(sigData,'PNG',M+1,y+1,sw-2,20);
+  } catch(e){}
+  doc.setFontSize(9); doc.setTextColor(TEXT[0],TEXT[1],TEXT[2]);
+  doc.text(document.getElementById('sigDate').value||'', M+sw+9, y+13);
+
+  doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
+  doc.rect(0,287,W,10,'F');
+  doc.setFontSize(6.5); doc.setTextColor(BG[0],BG[1],BG[2]); doc.setFont('helvetica','normal');
+  doc.text('F S  |  B O U T I Q U E   —   La Quinta, California', W/2, 293, {align:'center'});
+
+  return doc.output('blob');
 }
 
-function sendToHost(method) {
+function sendToHost() {
   var requiredFields = document.querySelectorAll('[required]');
   var allFilled = true;
   requiredFields.forEach(function(f) {
@@ -874,51 +936,80 @@ function sendToHost(method) {
       f.addEventListener('change', function() { this.style.borderColor = ''; }, { once: true });
     }
   });
-  if (!allFilled) { showToast('Preencha todos os campos obrigatorios'); return; }
+  if (!allFilled) { showToast('Please fill in all required fields'); return; }
 
   var fields = gatherFormData();
-  if (fields.length === 0) { showToast('Preencha o formulario primeiro'); return; }
+  if (fields.length === 0) { showToast('Please fill in the form first'); return; }
 
-  var guestName = document.getElementById('occupant1Name').value || 'Hospede';
-  var filename = 'Ficha-Ocupacao-' + guestName.replace(/\s+/g, '-') + '.pdf';
-  showToast('Gerando PDF...');
+  var guestName = document.getElementById('occupant1Name').value || 'Guest';
+  var filename = 'FS_Boutique_CheckIn_LaQuinta_' + guestName.replace(/\s+/g, '-') + '.pdf';
+  var shareText = 'Hi, here is my completed occupancy form for La Quinta Desert Villas.';
 
-  var el = buildPdfElement(fields);
-  document.body.appendChild(el);
+  try {
+    var blob = generatePdfBlob(fields);
+    var file = new File([blob], filename, { type: 'application/pdf' });
 
-  var opt = {
-    margin: [6, 6, 6, 6],
-    filename: filename,
-    image: { type: 'jpeg', quality: 0.95 },
-    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ text: shareText, files: [file] })
+        .then(function() { showToast('Form sent!'); })
+        .catch(function(e) { if (e.name !== 'AbortError') showToast('Sharing cancelled'); });
+    } else {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = filename; a.style.display = 'none';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;';
+      overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #c9a96e;border-radius:4px;padding:32px;max-width:420px;text-align:center;font-family:Josefin Sans,sans-serif;">'
+        + '<div style="font-size:13px;letter-spacing:4px;color:#c9a96e;margin-bottom:16px;">PDF SAVED</div>'
+        + '<div style="font-size:12px;color:#e8e4dc;line-height:1.8;margin-bottom:24px;">'
+        + '1. The PDF has been saved to your <strong>Downloads</strong> folder<br>'
+        + '2. Open <strong>WhatsApp Web</strong><br>'
+        + '3. In the conversation with your host, click the <strong>attachment icon 📎</strong><br>'
+        + '4. Select the file <strong>' + filename + '</strong>'
+        + '</div>'
+        + '<button onclick="this.parentElement.parentElement.remove()" style="background:#c9a96e;border:none;color:#0a0a0a;padding:12px 28px;font-family:Josefin Sans,sans-serif;font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:2px;">GOT IT</button>'
+        + '</div>';
+      document.body.appendChild(overlay);
+    }
+  } catch(err) {
+    showToast('Error: ' + (err.message || String(err)));
+    console.error(err);
+  }
+}
 
-  html2pdf().set(opt).from(el.firstChild).toPdf().output('blob').then(function(blob) {
-    document.body.removeChild(el);
+function sendByEmail() {
+  var fields = gatherFormData();
+  if (fields.length === 0) { showToast('Please fill in the form first'); return; }
+  var guestName = document.getElementById('occupant1Name').value || 'Guest';
+  var filename = 'FS_Boutique_CheckIn_LaQuinta_' + guestName.replace(/\s+/g, '-') + '.pdf';
+  try {
+    var blob = generatePdfBlob(fields);
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    a.href = url; a.download = filename; a.style.display = 'none';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
-
-    if (method === 'whatsapp') {
-      window.open('https://wa.me/' + HOST_WHATSAPP + '?text=' + encodeURIComponent('Ficha de Ocupacao - ' + guestName + ' - FS | BOUTIQUE\n\nPDF em anexo.'), '_blank');
-      showToast('PDF baixado — anexe no WhatsApp');
-    } else {
-      var subject = encodeURIComponent('Ficha de Ocupacao - ' + guestName + ' - FS | BOUTIQUE');
-      var body = encodeURIComponent('Segue em anexo a Ficha de Ocupacao.\n\n- FS | BOUTIQUE');
-      window.open('mailto:' + HOST_EMAIL + '?subject=' + subject + '&body=' + body, '_self');
-      showToast('PDF baixado — anexe no e-mail');
-    }
-  }).catch(function(err) {
-    if (el.parentNode) document.body.removeChild(el);
-    console.error('PDF error:', err);
-    showToast('Erro ao gerar PDF: ' + (err.message || err));
-  });
+    var body = 'Occupancy Form — FS | BOUTIQUE\nLa Quinta Desert Villas, California\n\n';
+    fields.forEach(function(f) { body += f.label + ': ' + (f.value||'-') + '\n'; });
+    body += '\nDate: ' + (document.getElementById('sigDate').value||'') + '\n\n---\nPDF attached (file saved to Downloads).';
+    var subject = 'Occupancy Form — ' + guestName + ' — La Quinta Desert Villas';
+    window.location.href = 'mailto:fabio@fsboutique.co?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    setTimeout(function() {
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;';
+      overlay.innerHTML = '<div style="background:#1a1a1a;border:1px solid #c9a96e;border-radius:4px;padding:32px;max-width:420px;text-align:center;font-family:Josefin Sans,sans-serif;">'
+        + '<div style="font-size:13px;letter-spacing:4px;color:#c9a96e;margin-bottom:16px;">ALMOST THERE</div>'
+        + '<div style="font-size:12px;color:#e8e4dc;line-height:1.8;margin-bottom:24px;">'
+        + 'Email has been pre-filled with your data.<br>'
+        + 'Before sending, <strong>attach the PDF</strong><br>'
+        + 'saved in your <strong>Downloads</strong> folder:<br><br>'
+        + '<span style="color:#c9a96e;">' + filename + '</span></div>'
+        + '<button onclick="this.parentElement.parentElement.remove()" style="background:#c9a96e;border:none;color:#0a0a0a;padding:12px 28px;font-family:Josefin Sans,sans-serif;font-size:11px;letter-spacing:3px;cursor:pointer;border-radius:2px;">GOT IT</button></div>';
+      document.body.appendChild(overlay);
+    }, 800);
+  } catch(err) { showToast('Error: ' + (err.message || String(err))); }
 }
 
 function showToast(msg) {
@@ -938,12 +1029,12 @@ document.getElementById('sigDate').valueAsDate = new Date();
   if (!resId) return;
 
   const toast = document.getElementById('toast');
-  toast.textContent = 'Carregando dados da reserva...';
+  toast.textContent = 'Loading reservation data...';
   toast.classList.add('show');
 
   try {
     const res = await fetch('/.netlify/functions/guesty-fetch?reservationId=' + encodeURIComponent(resId));
-    if (!res.ok) throw new Error('Reserva não encontrada');
+    if (!res.ok) throw new Error('Reservation not found');
     const data = await res.json();
 
     if (data.fullName) document.getElementById('occupant1Name').value = data.fullName;
@@ -952,10 +1043,10 @@ document.getElementById('sigDate').valueAsDate = new Date();
     if (data.checkInDate) document.getElementById('checkIn').value = data.checkInDate;
     if (data.checkOutDate) document.getElementById('checkOut').value = data.checkOutDate;
 
-    toast.textContent = 'Dados da reserva carregados';
+    toast.textContent = 'Reservation data loaded';
     setTimeout(() => toast.classList.remove('show'), 2500);
   } catch (err) {
-    toast.textContent = 'Não foi possível carregar — preencha manualmente';
+    toast.textContent = 'Could not load reservation — please fill in manually';
     setTimeout(() => toast.classList.remove('show'), 3500);
     console.error('Guesty fetch error:', err);
   }
